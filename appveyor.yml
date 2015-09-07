@@ -3,24 +3,15 @@ branches:
   only:
   - develop
   - master
-os:
-- Windows Server 2012 R2
-- Visual Studio 2015
-configuration:
-  - Debug-2013
-  - Release-2013
-  - Debug-2015
-  - Release-2015
 matrix:
-  allow_failures:
   - os: Windows Server 2012 R2
-    configuration: Debug-2015
-  - os: Windows Server 2012 R2
-    configuration: Release-2015
-  - os: Visual Studio 2015
     configuration: Debug-2013
-  - os: Visual Studio 2015
+  - os: Windows Server 2012 R2
     configuration: Release-2013
+  - os: Visual Studio 2015
+    configuration: Debug-2015
+  - os: Visual Studio 2015
+    configuration: Release-2015
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
@@ -29,7 +20,7 @@ assembly_info:
   assembly_informational_version: '{version} ({CONFIGURATION}/{APPVEYOR_REPO_BRANCH})'
 build:
   project: 'DummyConsoleApp1\DummyConsoleApp1.sln'
-  verbosity: normal # minimal
+  verbosity: minimal
 artifacts:
   - path: DummyConsoleApp1\bin\$(configuration)
-    name: DummyConsoleApp1
+    name: DummyConsoleApp1_$(APPVEYOR_REPO_BRANCH)_$(CONFIGURATION)
