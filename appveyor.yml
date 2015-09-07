@@ -13,12 +13,17 @@ environment:
     configuration: Debug-2015
   - os: Visual Studio 2015
     configuration: Release-2015
+os:
+  - Windows Server 2012 R2
+  - Visual Studio 2015
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
   assembly_version: '{version}'
   assembly_file_version: '{version}'
   assembly_informational_version: "{version} ($(CONFIGURATION)/$(APPVEYOR_REPO_BRANCH))"
+before_build:
+  - set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
 build:
   project: 'DummyConsoleApp1\DummyConsoleApp1.sln'
   verbosity: minimal
