@@ -18,7 +18,7 @@ assembly_info:
   file: '**\AssemblyInfo.*'
   assembly_version: '{version}'
   assembly_file_version: '{version}'
-  assembly_informational_version: '{version} ({CONFIGURATION}/{APPVEYOR_REPO_BRANCH})'
+  assembly_informational_version: "{version} ($(CONFIGURATION)/$(APPVEYOR_REPO_BRANCH))"
 build:
   project: 'DummyConsoleApp1\DummyConsoleApp1.sln'
   verbosity: minimal
