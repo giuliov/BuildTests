@@ -3,6 +3,7 @@ branches:
   only:
   - develop
   - master
+skip_tags: false
 os:
   - Visual Studio 2015
 configuration:
@@ -22,6 +23,18 @@ before_build:
 build:
   project: 'DummyConsoleApp1\DummyConsoleApp1.sln'
   verbosity: minimal
+after_build:
+  - 7z a "%APPVEYOR_PROJECT_NAME%-%APPVEYOR_BUILD_VERSION%-%CONFIGURATION%.zip" %APPVEYOR_BUILD_FOLDER%\DummyConsoleApp1\bin\%CONFIGURATION%\* -r -x!Microsoft.* -x!System.* -x!Newtonsoft.*
 artifacts:
-  - path: DummyConsoleApp1\bin\$(configuration)
-    name: DummyConsoleApp1_$(APPVEYOR_REPO_BRANCH)_$(CONFIGURATION)
+  - path: '*.zip'
+#    name: DummyConsoleApp1_$(APPVEYOR_REPO_BRANCH)_$(CONFIGURATION)
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: 5Cf8pHC/OuSTy7igeFv11fuWqOQQ4PF+gDaWesmVVTs4kTjIGYWOrbBaViQ9vyrN
+  artifact: /.*\.zip/   # upload all Zip packages to release assets
+  draft: true
+  prerelease: true
+  on:
+    branch: master            # release from master branch only
+    appveyor_repo_tag: true   # deploy on tag push only
