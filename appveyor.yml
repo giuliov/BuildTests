@@ -7,25 +7,21 @@ skip_tags: false
 os:
   - Visual Studio 2015
 configuration:
-  - Debug-2013
-  - Release-2013
+#  - Debug-2013
+#  - Release-2013
   - Debug-2015
   - Release-2015
-install:
-  # choco install gitversion.portable -pre -y
 before_build:
   - if %CONFIGURATION%==Debug-2013 set PATH=C:\Program Files (x86)\MSBuild\12.0\Bin;%PATH%
   - if %CONFIGURATION%==Release-2013 set PATH=C:\Program Files (x86)\MSBuild\12.0\Bin;%PATH%
-  # nuget restore
   - ps: gitversion /l console /output buildserver /updateAssemblyInfo
 build:
   project: 'DummyConsoleApp1\DummyConsoleApp1.sln'
   verbosity: minimal
 after_build:
-  - 7z a "%APPVEYOR_PROJECT_NAME%-%APPVEYOR_BUILD_VERSION%-%CONFIGURATION%.zip" %APPVEYOR_BUILD_FOLDER%\DummyConsoleApp1\bin\%CONFIGURATION%\* -r -x!Microsoft.* -x!System.* -x!Newtonsoft.*
+  - 7z a "%APPVEYOR_PROJECT_NAME%-%GitVersion_SemVer%-%CONFIGURATION%-%GitVersion_BranchName%.zip" %APPVEYOR_BUILD_FOLDER%\DummyConsoleApp1\bin\%CONFIGURATION%\* -r -x!Microsoft.* -x!System.* -x!Newtonsoft.*
 artifacts:
   - path: '*.zip'
-#    name: DummyConsoleApp1_$(APPVEYOR_REPO_BRANCH)_$(CONFIGURATION)
 deploy:
     # Create new Release in GitHub
   - provider: GitHub
