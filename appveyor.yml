@@ -19,6 +19,8 @@ build:
   project: 'DummyConsoleApp1\DummyConsoleApp1.sln'
   verbosity: minimal
 after_build:
+  - git clone --depth=1 --single-branch --separate-git-dir=%TEMP%\dummy-git https://github.com/giuliov/BuildTests.wiki.git doc
+  - rm doc\.git
   - 7z a "%APPVEYOR_PROJECT_NAME%-%GitVersion_SemVer%-%CONFIGURATION%-%GitVersion_BranchName%.zip" %APPVEYOR_BUILD_FOLDER%\DummyConsoleApp1\bin\%CONFIGURATION%\* -r -x!Microsoft.* -x!System.* -x!Newtonsoft.*
 artifacts:
   - path: '*.zip'
