@@ -12,7 +12,7 @@ jobs:
       with:
         dotnet-version: '2.2.401'
     - name: Download GitVersion
-      uses: docker://gittools/gitversion:latest-linux-netcoreapp2.2
+      uses: docker://gittools/gitversion:5.0.2-linux
       with:
         args: /updateassemblyinfo
     - run: Get-Content DummyConsoleApp1/Properties/AssemblyInfo.cs
