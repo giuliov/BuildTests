@@ -8,10 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    # required for GitVersion
+    - run: git fetch --tags
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '2.2.401'
-    - name: Download GitVersion
+    - name: Run GitVersion
       uses: docker://gittools/gitversion:5.0.2-linux
       with:
         args: /updateassemblyinfo
