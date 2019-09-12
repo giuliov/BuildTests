@@ -9,7 +9,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     # required for GitVersion
-    - run: git fetch --tags
+    - run: |
+        git fetch --tags
+        git checkout $GITHUB_REF
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '2.2.401'
