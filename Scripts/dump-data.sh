@@ -1,9 +1,12 @@
-cp $GITHUB_WORKSPACE/data.json $GITHUB_WORKSPACE/data-2.json
+#!/bin/bash
 
-while read LINE; do
-    LNE=$LINE
-    echo "READ: > $LNE <"
-done <  $GITHUB_WORKSPACE/data-2.json
+if [ "$1" == "" ]; then
+    echo "Path to data file required"
+else
+    while read LINE; do
+        LNE=$LINE
+        echo "READ: > $LNE <"
+    done < $1
+fi
 
 rm $GITHUB_WORKSPACE/data.json
-rm $GITHUB_WORKSPACE/data-2.json
