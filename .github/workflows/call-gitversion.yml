@@ -1,5 +1,3 @@
-name: call-gitversion
-
 on: push
 
 jobs:
