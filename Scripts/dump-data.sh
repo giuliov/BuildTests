@@ -1,5 +1,9 @@
+cp $GITHUB_WORKSPACE/data.json $GITHUB_WORKSPACE/data-2.json
+
 while read LINE; do
-     echo "READ: $LINE"
-done < $GITHUB_WORKSPACE/data.json
+    LNE=$LINE
+    echo "READ: > $LNE <"
+done <  $GITHUB_WORKSPACE/data-2.json
 
 rm $GITHUB_WORKSPACE/data.json
+rm $GITHUB_WORKSPACE/data-2.json
