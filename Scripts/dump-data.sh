@@ -9,4 +9,4 @@ else
     done < $1
 fi
 
-rm $GITHUB_WORKSPACE/data.json
+rm $1
