@@ -1,2 +1,2 @@
-cat $GITHUB_WORKSPACE/data.json
-rm $GITHUB_WORKSPACE/data.json
+cat ../data.json
+rm ../data.json
