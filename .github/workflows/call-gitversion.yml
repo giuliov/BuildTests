@@ -1,0 +1,21 @@
+on: push
+
+jobs:
+  build:
+    # If the action you're using is a Docker container you must run the job in a Linux virtual environment
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    # required for GitVersion
+    - run: |
+        git fetch --tags
+        git branch --create-reflog master origin/master
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '2.2.401'
+    - name: Run GitVersion
+      uses: docker://gittools/gitversion:5.0.2-linux
+      with:
+        args: /updateassemblyinfo
+    - run: Get-Content DummyConsoleApp1/Properties/AssemblyInfo.cs
+      shell: pwsh
