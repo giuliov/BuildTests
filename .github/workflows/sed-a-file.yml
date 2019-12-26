@@ -10,6 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: run sed
-      run: sed -E -i "s/\[assembly: AssemblyInformationalVersion\(.*\)\]/\[assembly: AssemblyInformationalVersion\(${{ github.event_name }}\)\]/" ${GITHUB_WORKSPACE}/DummyConsoleApp1/Properties/AssemblyInfo.cs
+      run: 'sed -E -i "s/\[assembly: AssemblyInformationalVersion\(.*\)\]/\[assembly: AssemblyInformationalVersion\(${{ github.event_name }}\)\]/" ${GITHUB_WORKSPACE}/DummyConsoleApp1/Properties/AssemblyInfo.cs'
     - name: dump
       run: cat ${GITHUB_WORKSPACE}/DummyConsoleApp1/Properties/AssemblyInfo.cs
