@@ -28,17 +28,20 @@ namespace DummyConsoleApp1
             var descr = GetCustomAttribute<System.Reflection.AssemblyDescriptionAttribute>();
             var conf = GetCustomAttribute<System.Reflection.AssemblyConfigurationAttribute>();
             var copy = GetCustomAttribute<System.Reflection.AssemblyCopyrightAttribute>();
+            var company = GetCustomAttribute<System.Reflection.AssemblyCompanyAttribute>();
+            var product = GetCustomAttribute<System.Reflection.AssemblyProductAttribute>();
             var fileVersion = GetCustomAttribute<System.Reflection.AssemblyFileVersionAttribute>();
             var infoVersion = GetCustomAttribute<System.Reflection.AssemblyInformationalVersionAttribute>();
 
             var sb = new StringBuilder();
-            sb.AppendFormat("{0} {1}", title.Title, infoVersion.InformationalVersion);
+            sb.AppendLine($"Title: {title.Title} FileVer: {fileVersion.Version}");
             sb.AppendLine();
-            sb.AppendLine(descr.Description);
-            sb.AppendFormat("Build: {0}/{1}", fileVersion.Version, conf.Configuration);
+            sb.AppendLine($"Descr: {descr.Description}");
+            sb.AppendLine($"InfoVer: {infoVersion.InformationalVersion} Config: {conf.Configuration}");
             sb.AppendLine();
-            sb.AppendLine(copy.Copyright);
-
+            sb.AppendLine($"Copyright: {copy.Copyright}");
+            sb.AppendLine($"Company: {company.Company}");
+            sb.AppendLine($"Product: {product.Product}");
             return sb.ToString();
         }
     }

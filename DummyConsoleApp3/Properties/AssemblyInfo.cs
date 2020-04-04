@@ -5,9 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Sample SDK-style project")]
 [assembly: AssemblyCopyright("Copyright © Giulio Vian")]
-[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 
