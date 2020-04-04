@@ -5,6 +5,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>DummyConsoleApp3</RootNamespace>
     <AssemblyName>dummyConsoleApp3</AssemblyName>
+    <!---->
+    <Company>My Great Team</Company>
+    <Product>Build Samples</Product>
+    <Copyright>Copyright © Giulio Vian</Copyright>
+    <Description>Sample SDK-style project</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
