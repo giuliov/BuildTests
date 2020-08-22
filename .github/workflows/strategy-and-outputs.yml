@@ -8,17 +8,24 @@ on:
 jobs:
   zero:
     runs-on: ubuntu-latest
-    # Map a step output to a job output
     outputs:
-      output1: ${{ steps.step1.outputs.test }}
-      output2: ${{ steps.step2.outputs.test }}
+      myvar: ${{ steps.step0.outputs.myvar }}
     steps:
-    - id: step1
-      run: echo "::set-output name=test::hello"
-    - id: step2
-      run: echo "::set-output name=test::world"
+    - id: step0
+      run: echo "::set-output name=myvar::zero"
   one:
     runs-on: ubuntu-latest
     needs: zero
+    outputs:
+      myothervar: ${{ steps.step1.outputs.myothervar }}    
+    strategy:
+      matrix:
+        os: [linux, windows]
     steps:
-    - run: echo ${{needs.zero.outputs.output1}} ${{needs.zero.outputs.output2}}
+    - id: step1
+      run: echo "::set-output name=myothervar::${{ matrix.os }}"
+  two:
+    runs-on: ubuntu-latest
+    needs: [zero, one]
+    steps:
+    - run: echo ${{needs.zero.outputs.myvar}} ${{needs.one.outputs.myothervar}}
