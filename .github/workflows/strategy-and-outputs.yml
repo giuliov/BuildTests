@@ -6,26 +6,18 @@ on:
       - strategy-and-outputs
 
 jobs:
-  zero:
-    runs-on: ubuntu-latest
-    outputs:
-      myvar: ${{ steps.step0.outputs.myvar }}
-    steps:
-    - id: step0
-      run: echo "::set-output name=myvar::zero"
   one:
-    runs-on: ubuntu-latest
-    needs: zero
+    runs-on: ${{ matrix.os }}
     outputs:
-      myothervar: ${{ steps.step1.outputs.myothervar }}    
+      myvar: ${{ steps.step1.outputs.myvar }}    
     strategy:
       matrix:
-        os: [linux, windows]
+        os: [ubuntu-latest, windows-latest]
     steps:
     - id: step1
-      run: echo "::set-output name=myothervar::${{ matrix.os }}"
+      run: echo "::set-output name=myvar::${{ matrix.os }}"
   two:
     runs-on: ubuntu-latest
-    needs: [zero, one]
+    needs: one
     steps:
-    - run: echo ${{needs.zero.outputs.myvar}} ${{needs.one.outputs.myothervar}}
+    - run: echo ${{needs.one.outputs.myvar}}
