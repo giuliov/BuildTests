@@ -1,4 +1,9 @@
-on: push
+name: call-gitversion
+
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
