@@ -13,6 +13,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: mydata
+      continue-on-error: true 
     - run: |
         echo "Some new data" >> mydata.txt
     - name: Upload updated file
