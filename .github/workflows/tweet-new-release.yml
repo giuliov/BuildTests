@@ -1,4 +1,5 @@
-# tweet-new-release.yml
+name: tweet-new-release
+
 on:
   release:
     types: [created,edited,published] # this is just for testing

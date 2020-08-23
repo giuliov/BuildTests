@@ -1,6 +1,8 @@
-name: CI
+name: sed-a-file
 
-on: [push]
+on:
+  repository_dispatch:
+    types: [sed-a-file]
 
 jobs:
   build:
