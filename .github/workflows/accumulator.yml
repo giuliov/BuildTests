@@ -1,0 +1,22 @@
+name: accumulator
+
+on:
+  push:
+    branches:
+      - accumulator
+
+jobs:
+  adder:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download last data
+      uses: actions/download-artifact@v2
+      with:
+        name: mydata
+    - run: |
+        echo "Some new data" >> mydata.txt
+    - name: Upload updated file
+      uses: actions/upload-artifact@v2
+      with:
+        name: mydata
+        path: mydata.txt
