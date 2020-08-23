@@ -15,7 +15,7 @@ jobs:
         name: mydata
       continue-on-error: true 
     - run: |
-        echo "Some new data" >> mydata.txt
+        echo "Some new data 2" >> mydata.txt
     - name: Upload updated file
       uses: actions/upload-artifact@v2
       with:
