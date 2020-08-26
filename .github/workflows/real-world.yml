@@ -66,9 +66,11 @@ jobs:
         path: out/**
 
   release:
+    env:
+      JOB_EMULATE: ${{ env.EMULATE }}
     runs-on: ubuntu-latest
     #if: github.ref == 'refs/heads/master'
-    if: ${{ env.EMULATE == '1' || startsWith(github.ref, 'refs/tags/v') }}
+    if: startsWith(github.ref, 'refs/tags/v') || env.JOB_EMULATE == '1'
     needs: build
     steps:
     - name: Download artifact
