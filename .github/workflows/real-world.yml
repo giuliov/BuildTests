@@ -66,18 +66,17 @@ jobs:
         path: out/**
 
   release:
-    env:
-      JOB_EMULATE: ${{ env.EMULATE }}
     runs-on: ubuntu-latest
-    #if: github.ref == 'refs/heads/master'
-    if: startsWith(github.ref, 'refs/tags/v') || env.JOB_EMULATE == '1'
     needs: build
     steps:
     - name: Download artifact
+      if: startsWith(github.ref, 'refs/tags/v') || env.EMULATE == '1'
       uses: actions/download-artifact@v2
       with:
         name: published
         path: out/
-    - run: |
+    - name: Check output
+      if: startsWith(github.ref, 'refs/tags/v') || env.EMULATE == '1'
+      run: |
         echo "versionTag: ${{ needs.build.outputs.versionTag }}"
         ls -R ./out
