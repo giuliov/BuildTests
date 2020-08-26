@@ -26,7 +26,7 @@ jobs:
         dotnet-version: '3.1.x'
     - name: Run GitVersion
       id: gitversion # step id used as reference for output values
-      uses: gittools/actions/gitversion/execute@v0.9
+      uses: gittools/actions/gitversion/execute@v0.9.4
     - name: Dump version numbers
       run: |
         echo "PreReleaseTag: ${{ steps.gitversion.outputs.preReleaseTag }}"
