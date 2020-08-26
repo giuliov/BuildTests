@@ -4,16 +4,20 @@ on:
   push:
     branches:
       - real-world
+    tags:
+      - v*
   pull_request:
     branches:
       - real-world
+    tags:
+      - v*
 
 jobs:
 
   build:
     runs-on: ubuntu-latest
     outputs:
-      versionTag: ${{ steps.gitversion.outputs.fullSemVer }}       
+      versionTag: ${{ steps.gitversion.outputs.fullSemVer }}
     steps:
     - uses: actions/checkout@v1
     # required for GitVersion
@@ -23,7 +27,7 @@ jobs:
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.4
       with:
-          versionSpec: '5.2.x'        
+          versionSpec: '5.2.x'
     - name: Run GitVersion
       id: gitversion # step id used as reference for output values
       uses: gittools/actions/gitversion/execute@v0.9.4
