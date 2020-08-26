@@ -1,0 +1,58 @@
+name: real-world
+
+on:
+  push:
+    branches:
+      - real-world
+  pull_request:
+    branches:
+      - real-world
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      versionTag: ${{ steps.gitversion.outputs.fullSemVer }}       
+    steps:
+    - uses: actions/checkout@v1
+    # required for GitVersion
+    - name: Fetch all history for all tags and branches
+      run: git fetch --prune --unshallow
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.x'
+    - name: Run GitVersion
+      id: gitversion # step id used as reference for output values
+      uses: gittools/actions/gitversion/execute@v0.9
+    - name: Dump version numbers
+      run: |
+        echo "PreReleaseTag: ${{ steps.gitversion.outputs.preReleaseTag }}"
+        echo "PreReleaseTagWithDash: ${{ steps.gitversion.outputs.preReleaseTagWithDash }}"
+        echo "PreReleaseLabel: ${{ steps.gitversion.outputs.preReleaseLabel }}"
+        echo "PreReleaseNumber: ${{ steps.gitversion.outputs.preReleaseNumber }}"
+        echo "WeightedPreReleaseNumber: ${{ steps.gitversion.outputs.weightedPreReleaseNumber }}"
+        echo "BuildMetaData: ${{ steps.gitversion.outputs.buildMetaData }}"
+        echo "FullBuildMetaData: ${{ steps.gitversion.outputs.fullBuildMetaData }}"
+        echo "MajorMinorPatch: ${{ steps.gitversion.outputs.majorMinorPatch }}"
+        echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
+        echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
+        echo "InformationalVersion: ${{ steps.gitversion.outputs.informationalVersion }}"
+        echo "BranchName: ${{ steps.gitversion.outputs.branchName }}"
+        echo "ShortSha: ${{ steps.gitversion.outputs.shortSha }}"
+        echo "VersionSourceSha: ${{ steps.gitversion.outputs.versionSourceSha }}"
+        echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.commitsSinceVersionSource }}"
+    - name: Build
+      run: dotnet build DummyConsoleApp3\DummyConsoleApp3.csproj
+    - name: Build something
+      run: dotnet publish DummyConsoleApp3\DummyConsoleApp3.csproj -o out -c Release
+
+  release:
+    runs-on: ubuntu-latest
+    #if: github.ref == 'refs/heads/master'
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    steps:
+    - run: |
+        echo "versionTag: ${{ needs.build.outputs.versionTag }}"
+        ls ./out
