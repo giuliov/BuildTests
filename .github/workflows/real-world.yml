@@ -68,7 +68,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     #if: github.ref == 'refs/heads/master'
-    if: startsWith(github.ref, 'refs/tags/v') || env.EMULATE == '1'
+    if: ${{ startsWith(github.ref, 'refs/tags/v') || env.EMULATE == '1' }}
     needs: build
     steps:
     - name: Download artifact
