@@ -64,6 +64,17 @@ jobs:
       with:
         name: published
         path: out/**
+    - name: Generate pseudo-tags
+      run: |
+        mkdir tags
+        echo . > tags/tag1
+        echo . > tags/tag2
+    - name: Upload tags
+      uses: actions/upload-artifact@v2
+      with:
+        name: tags
+        path: 'tags/*'
+        
 
   release:
     runs-on: ubuntu-latest
@@ -80,3 +91,14 @@ jobs:
       run: |
         echo "versionTag: ${{ needs.build.outputs.versionTag }}"
         ls -R ./out
+    - name: Download tags
+      uses: actions/download-artifact@v2
+      with:
+        name: tags
+        path: 'tags/'
+    - name: Push manifest
+      run: |
+        pushd tags
+        amends=""; for tag in *; do amends=$amends" --amend dummy:${tag}"; done
+        popd
+        echo $amends
