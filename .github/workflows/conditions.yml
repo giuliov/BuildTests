@@ -13,14 +13,14 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/v')
       run: 'echo "tag"'
     - name: 'if master'
-      if: github.ref == 'ref/head/master'
+      if: github.ref == 'refs/heads/master'
       run: 'echo "master"'
     - name: 'if tag or master'
-      if: startsWith(github.ref, 'refs/tags/v') || github.ref == 'ref/head/master'
+      if: startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/master'
       run: 'echo "tag or master"'
     - name: 'if master or tag'
-      if: github.ref == 'ref/head/master' || startsWith(github.ref, 'refs/tags/v')
+      if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')
       run: 'echo "master or tag"'
     - name: 'if quoted tag or master'
-      if: "startsWith(github.ref, 'refs/tags/v') || github.ref == 'ref/head/master'"
+      if: "startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/master'"
       run: 'echo "tag or master quoted"'
